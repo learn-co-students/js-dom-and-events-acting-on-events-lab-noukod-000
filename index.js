@@ -1,4 +1,5 @@
 const app = "I don't do much."
+
 function preventRefreshOnSubmit(){
     document.querySelector('form').addEventListener('submit', function(event){
       event.preventDefault()
@@ -7,25 +8,34 @@ function preventRefreshOnSubmit(){
 
 preventRefreshOnSubmit()
 
+let input = document.querySelector('input')
 
 function retrieveEmployeeInformation(){
-  const val = document.querySelector('input').value; //$("input[name='name']").text('try it');
-  document.querySelector('input').value = "" //$("input[name='name']").text("");
-  return val;
+  return input.value
 }
 
 function addNewElementAsLi(){
-  document.querySelector('ul.employee-list').append('<li>'+retrieveEmployeeInformation()+'</li>');
+  let employeeName = retrieveEmployeeInformation()
+  document.querySelector('.employee-list').insertAdjacentHTML('beforeend', `<li>${employeeName}</li>`)
 }
+
 
 function addNewLiOnClick(){
-  preventRefreshOnSubmit()
-  addNewElementAsLi();
+  let submit = document.querySelector('input[type="submit"]')
+  submit.addEventListener('click', function(event){
+    addNewElementAsLi()
+    resetInput()
+  })
 }
 
-
 function clearEmployeeListOnLinkClick(){
-  document.querySelector('a').addEventListener('click', function(event){
-    document.querySelector('ul.employee-list').innerHTML = '';
-  });
+  let link = document.querySelector('a')
+  let ul = document.querySelector('ul')
+  link.addEventListener('click', function(event){
+    ul.innerHTML = ''
+  })
+}
+
+function resetInput(){
+  document.querySelector('input').value = ''
 }
